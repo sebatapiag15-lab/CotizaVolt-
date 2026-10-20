@@ -111,3 +111,6 @@ addRow();
 </script>
 </body>
 </html>
+// ACTIVACION PRO - RUT 23.019.823-3
+(function(){const p=new URLSearchParams(location.search);const c=p.get('activate');if(c){try{const d=atob(c).split('|');if(d[2]==='23.019.823-3'){localStorage.setItem('cotizaVolt_pro_venc',d[0]);alert('¡PRO Activado por '+d[1]+' días! Gracias por tu pago a Cuenta RUT 23.019.823-3');location.href=location.pathname}}catch(e){}}})();
+function checkPro(){const v=localStorage.getItem('cotizaVolt_pro_venc');if(!v)return false;if(new Date()<new Date(v))return true;localStorage.removeItem('cotizaVolt_pro_venc');return false;}
