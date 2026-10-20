@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin CotizaVolt - 23.019.823-3</title>
+<style>
+body{font-family:sans-serif;background:#0f172a;color:white;padding:20px;text-align:center}
+.card{background:white;color:#0f172a;border-radius:20px;padding:20px;max-width:500px;margin:auto}
+button{background:#0f172a;color:#facc15;border:none;padding:15px 20px;border-radius:12px;width:100%;margin:10px 0;font-size:18px;font-weight:bold}
+input{width:90%;padding:12px;border-radius:10px;border:2px solid #ddd;margin:10px 0}
+.link{background:#f1f5f9;padding:12px;border-radius:10px;word-break:break-all;margin:10px 0;font-size:14px}
+small{color:#64748b}
+</
