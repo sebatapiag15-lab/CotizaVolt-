@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CotizaVolt | Cotizaciones eléctricas</title>
+<style>
+:root{--navy:#124d78;--blue:#087f9c;--yellow:#ffc928;--ink:#17324d;--muted:#60758a;--line:#dce7ef;--bg:#f3f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+.wrap{max-width:1050px;margin:24px auto;padding:0 14px}
+.sheet{background:white;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 12px 35px #123d5b12}
+.hero{background:linear-gradient(120deg,#124d78,#087f9c);color:white;padding:24px 28px;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.brand{display:flex;gap:13px;align-items:center}.bolt{font-size:42px;color:var(--yellow)}h1{font-size:clamp(25px,4vw,38px);margin:0;letter-spacing:-1px}.brand strong span{color:var(--yellow)}.tag{margin:6px 0 0;color:#e0f4ff;font-size:14px}.doc{text-align:right;min-width:120px}.doc b{display:block;font-size:18px}.doc small{display:block;margin-top:6px}
+main{padding:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{border:1px solid var(--line);border-radius:10px;padding:16px;background:#fbfdff}.panel h2{font-size:15px;color:var(--navy);margin:0 0 12px}
+label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin:10px 0 5px}input,textarea,select{width:100%;font:inherit;color:var(--ink);padding:10px;border:1px solid #cbd9e5;border-radius:7px;background:white;min-width:0}textarea{resize:vertical;min-height:65px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.section-title{margin:24px 0 10px;color:var(--navy);font-size:17px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:9px}table{width:100%;border-collapse:collapse;min-width:620px}th{background:var(--blue);color:white;text-align:left;font-size:12px;padding:12px 10px}td{border-top:1px solid var(--line);padding:7px}td input{padding:8px;border-color:#e0e8ef}td.num{text-align:right;font-weight:700;white-space:nowrap}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.btn{border:0;border-radius:8px;padding:11px 15px;font-weight:700;cursor:pointer;font-size:14px}.primary{background:var(--navy);color:white}.secondary{background:#e8f3f9;color:var(--navy)}.remove{background:#fff0ef;color:#a32f2f;padding:8px 10px}
+.bottom{display:grid;grid-template-columns:1fr minmax(260px,390px);gap:18px;margin-top:20px}.note{background:#f1f8fc;border-radius:10px;padding:16px;color:var(--muted);font-size:13px;line-height:1.5}.totals{border:1px solid var(--line);border-radius:10px;overflow:hidden}.totalrow{display:flex;justify-content:space-between;gap:12px;padding:11px 14px;border-bottom:1px solid var(--line)}.totalrow:last-child{border:0}.totalrow strong{white-space:nowrap}.grand{background:var(--navy);color:white;font-size:18px;font-weight:700}.grand strong{background:var(--yellow);color:#12324c;margin:-11px -14px;padding:11px 14px}
+footer{background:#0f4167;color:#d9effa;padding:14px 24px;font-size:12px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.smallprint{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
+@media(max-width:700px){.hero{padding:20px;align-items:flex-start}.doc{font-size:12px}.grid,.bottom{grid-template-columns:1fr}main{padding:15px}.two{grid-template-columns:1fr}.bolt{font-size:32px}}
+@media print{body{background:white}.wrap{max-width:none;margin:0;padding:0}.sheet{border:0;box-shadow:none;border-radius:0}.hero{-webkit-print-color-adjust:exact;print-color-adjust:exact}.actions,.remove,.no-print{display:none!important}main{padding:15px}.panel,.totals,.tablewrap{break-inside:avoid}input,textarea{border:0!important;padding:2px!important;appearance:none;background:transparent!important}footer,.grand,th{-webkit-print-color-adjust:exact;print-color-adjust:exact} }
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="sheet">
+<header class="hero">
+  <div class="brand"><div class="bolt">ϟ</div><div><h1>Cotiza<span style="color:#ffc928">Volt</span></h1><p class="tag">Cotizaciones eléctricas, simples y claras</p></div></div>
+  <div class="doc"><b>COTIZACIÓN</b><small>N.º <input id="quoteNo" value="0001" aria-label="Número de cotización" style="width:85px;display:inline-block;padding:4px;text-align:center;color:#17324d"></small><small>Fecha: <input id="quoteDate" type="date" aria-label="Fecha" style="width:145px;display:inline-block;padding:4px"></small></div>
+</header>
+<main>
+  <div class="grid">
+    <section class="panel"><h2>Datos del electricista / empresa</h2>
+      <label for="business">Nombre o empresa</label><input id="business" placeholder="Ej. Electricidad Pérez">
+      <div class="two"><div><label for="rut">RUT (opcional)</label><input id="rut" placeholder="12.345.678-9"></div><div><label for="phone">Teléfono</label><input id="phone" placeholder="+56 9 ..."></div></div>
+      <label for="email">Correo (opcional)</label><input id="email" type="email" placeholder="correo@ejemplo.cl">
+    </section>
+    <section class="panel"><h2>Datos del cliente</h2>
+      <label for="client">Nombre del cliente</label><input id="client" placeholder="Nombre completo o empresa">
+      <label for="address">Dirección del trabajo</label><input id="address" placeholder="Calle, comuna">
+      <label for="clientContact">Contacto (opcional)</label><input id="clientContact" placeholder="Teléfono o correo">
+    </section>
+  </div>
+  <div class="grid" style="margin-top:16px">
+    <section class="panel"><h2>Descripción del trabajo</h2><textarea id="description" placeholder="Describe brevemente el trabajo que se realizará"></textarea></section>
+    <section class="panel"><h2>Condiciones</h2>
+      <div class="two"><div><label for="validity">Vigencia</label><input id="validity" value="15 días"></div><div><label for="payment">Forma de pago</label><input id="payment" placeholder="Ej. 50% inicio"></div></div>
+      <label for="notes">Observaciones</label><input id="notes" placeholder="Plazos, materiales, condiciones...">
+    </section>
+  </div>
+  <h2 class="section-title">Materiales y trabajos</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th style="width:42%">Material o trabajo</th><th style="width:14%">Cantidad</th><th style="width:20%">Precio unitario (CLP)</th><th style="width:20%">Total (CLP)</th><th class="no-print"></th></tr></thead>
+    <tbody id="items"></tbody>
+  </table></div>
+  <div class="actions no-print"><button class="btn secondary" id="addBtn">＋ Agregar material o trabajo</button><button class="btn secondary" id="sampleBtn">Cargar ejemplo</button></div>
+  <div class="bottom">
+    <div class="note"><strong>Gracias por considerar esta cotización.</strong><br>Revisa cantidades, precios y condiciones antes de enviarla. Esta herramienta es una plantilla inicial; verifica los requisitos tributarios y técnicos aplicables a tu actividad.</div>
+    <div class="totals">
+      <div class="totalrow"><span>Total materiales y trabajos</span><strong id="subtotal">$0</strong></div>
+      <div class="totalrow"><label for="labor" style="margin:0;color:inherit;font-size:14px">Mano de obra (CLP)</label><input id="labor" type="number" min="0" step="1" value="0" style="max-width:135px;text-align:right"></div>
+      <div class="totalrow"><label for="extra" style="margin:0;color:inherit;font-size:14px">Otros costos (CLP)</label><input id="extra" type="number" min="0" step="1" value="0" style="max-width:135px;text-align:right"></div>
+      <div class="totalrow grand"><span>TOTAL COTIZACIÓN</span><strong id="grandTotal">$0</strong></div>
+    </div>
+  </div>
+  <div class="actions no-print"><button class="btn primary" id="printBtn">Imprimir / Guardar PDF</button><button class="btn secondary" id="clearBtn">Limpiar cotización</button></div>
+  <p class="smallprint">CotizaVolt es una herramienta de apoyo para preparar presupuestos. No certifica instalaciones eléctricas ni reemplaza la revisión profesional de los trabajos, precios, impuestos o requisitos legales.</p>
+</main>
+<footer><span>⚡ CotizaVolt</span><span>Plantilla editable de cotización eléctrica</span><span>Precios en pesos chilenos (CLP)</span></footer>
+</div>
+</div>
+<script>
+const tbody=document.getElementById('items');
+const money=n=>new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(Number(n)||0);
+function addRow(name='',qty=1,price=0){
+ const tr=document.createElement('tr');
+ tr.innerHTML=`<td><input class="itemname" aria-label="Material o trabajo" placeholder="Ej. Cable eléctrico"></td><td><input class="qty" aria-label="Cantidad" type="number" min="0" step="any" value="${qty}"></td><td><input class="price" aria-label="Precio unitario en pesos" type="number" min="0" step="1" value="${price}"></td><td class="num rowtotal">$0</td><td class="no-print"><button type="button" class="btn remove" aria-label="Eliminar fila">×</button></td>`;
+ tr.querySelector('.itemname').value=name;
+ tr.querySelectorAll('input').forEach(el=>el.addEventListener('input',calculate));
+ tr.querySelector('.remove').addEventListener('click',()=>{tr.remove();calculate()});
+ tbody.appendChild(tr);calculate();
+}
+function calculate(){
+ let subtotal=0;
+ tbody.querySelectorAll('tr').forEach(tr=>{
+  const q=Math.max(0,Number(tr.querySelector('.qty').value)||0);
+  const p=Math.max(0,Number(tr.querySelector('.price').value)||0);
+  const t=q*p;subtotal+=t;tr.querySelector('.rowtotal').textContent=money(t);
+ });
+ document.getElementById('subtotal').textContent=money(subtotal);
+ const labor=Math.max(0,Number(document.getElementById('labor').value)||0);
+ const extra=Math.max(0,Number(document.getElementById('extra').value)||0);
+ document.getElementById('grandTotal').textContent=money(subtotal+labor+extra);
+}
+document.getElementById('addBtn').addEventListener('click',()=>addRow());
+document.getElementById('sampleBtn').addEventListener('click',()=>{
+ tbody.innerHTML='';addRow('Cable eléctrico',3,5000);addRow('Luminaria LED',5,8000);addRow('Interruptor',2,4500);document.getElementById('labor').value=25000;calculate();
+});
+document.getElementById('printBtn').addEventListener('click',()=>window.print());
+document.getElementById('clearBtn').addEventListener('click',()=>{
+ if(!confirm('¿Quieres limpiar los datos de esta cotización?'))return;
+ ['business','rut','phone','email','client','address','clientContact','description','notes'].forEach(id=>document.getElementById(id).value='');
+ document.getElementById('validity').value='15 días';document.getElementById('payment').value='';
+ document.getElementById('labor').value=0;document.getElementById('extra').value=0;tbody.innerHTML='';addRow();document.getElementById('quoteNo').value='0001';calculate();
+});
+document.getElementById('labor').addEventListener('input',calculate);
+document.getElementById('extra').addEventListener('input',calculate);
+document.getElementById('quoteDate').value=new Date().toISOString().slice(0,10);
+addRow();
+</script>
+</body>
+</html>
